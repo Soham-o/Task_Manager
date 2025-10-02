@@ -1,2 +1,11 @@
 # Task_Manager
+
 Turn your to-do list into a command center with My Tasks.  After a quick sign-up, your personal dashboard is ready for you to add, edit, and organize your tasks. The magic is in the perspective: get a clean summary with the List View, or map out your strategy on the visual Board View. Switch between them anytime to match your workflow.
+
+"My Tasks" is a feature-rich, client-side task management application developed from the ground up using only vanilla JavaScript, HTML5, and CSS3. The project serves as a comprehensive demonstration of foundational web development principles, focusing on creating a dynamic, interactive, and persistent user experience without relying on any external frameworks or libraries.
+
+A key component is the user authentication system, which provides secure login and sign-up functionality through a dedicated authentication page. User data and sessions are managed entirely within the browser's localStorage. An authentication guard prevents unauthorized access to the main application, redirecting any non-logged-in users to the login screen. To ensure data privacy, each user's tasks are stored separately under a unique key tied to their email address, providing a personalized and persistent experience across sessions.
+
+The application supports full CRUD (Create, Read, Update, Delete) operations for tasks through an intuitive modal interface. Users can add tasks with names, descriptions, and due dates. The standout feature is the dual-view system, allowing users to seamlessly toggle between a traditional vertical List View and a Kanban-style Board View. This flexibility enables users to organize their workflow by status—'To Do,' 'Doing,' and 'Done'—in the format that best suits their needs.
+
+Beyond standard functionality, My Tasks includes robust data portability. Users can export their entire task list to a CSV file for backup and import tasks from a CSV to quickly populate their boards. The JavaScript codebase is structured using modern ES6 classes, primarily the TaskManager class, which encapsulates all core logic for better maintainability. The design is fully responsive, ensuring a seamless user experience across all devices.
