@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Tasks - Task Manager</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Protest+Guerrilla&display=swap" rel="stylesheet">
+            <h1 class="app-title">My Tasks</h1>
+            <span id="userName" style="font-weight: 500;"></span>
+            <div class="header-actions">
+                <button class="btn btn-primary" id="addTaskBtn">Add task</button>
+                <button class="btn btn-export" id="exportBtn">Export CSV</button>
+                <button class="btn btn-import" id="importBtn">Import CSV</button>
+                <input type="file" id="fileInput" accept=".csv" style="display: none;">
+                <button class="btn btn-signout" id="signOutBtn">Sign out</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- View Toggle -->
+     <div class="view-toggle1">
+        </div>
+    <div class="view-toggle">
+        <button class="toggle-btn active" id="listViewBtn">
+            <span class="toggle-icon">≡</span>
+            List
+        </button>
+    
+        <button class="toggle-btn" id="boardViewBtn" >
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" 
+        fill="none" stroke="currentColor" 
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+        class="lucide lucide-layout-grid h-5 w-5">
+        <rect width="7" height="7" x="3" y="3" rx="1"></rect>
+        <rect width="7" height="7" x="14" y="3" rx="1"></rect>
+        <rect width="7" height="7" x="14" y="14" rx="1"></rect>
+        <rect width="7" height="7" x="3" y="14" rx="1"></rect></svg>
+            Board
+        </button>
+    </div>
+    <div class="view-toggle2">
+        </div>
+
+    
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- List View -->
+        <div class="list-view" id="listView">
+            <div class="status-section" data-status="todo">
+                <div class="status-header">
+                    <div class="status-indicator todo"></div>
+                    <span class="status-title">To do</span>
+                    <span class="status-count">0</span>
+                </div>
+                <div class="task-container" id="todoTasks"></div>
+            </div>
+
+            <div class="status-section" data-status="doing">
+                <div class="status-header">
+                    <div class="status-indicator doing"></div>
+                    <span class="status-title">Doing</span>
+                    <span class="status-count">0</span>
+                </div>
+                <div class="task-container" id="doingTasks"></div>
+            </div>
+
+            <div class="status-section" data-status="done">
+                <div class="status-header">
+                    <div class="status-indicator done"></div>
+                    <span class="status-title">Done</span>
+                    <span class="status-count">0</span>
+                </div>
+                <div class="task-container" id="doneTasks"></div>
+            </div>
+        </div>
+
+        <!-- Board View (hidden by default) -->
+        <div class="board-view" id="boardView" style="display: none;">
+            <div class="board-columns">
+                <div class="board-column" data-status="todo">
+                    <div class="column-header">
+                        <div class="status-indicator todo"></div>
+                        <span class="status-title">To do</span>
+                        <span class="status-count">0</span>
+                    </div>
+                    <div class="column-tasks" id="todoBoard"></div>
+                </div>
+
+                <div class="board-column" data-status="doing">
+                    <div class="column-header">
+                        <div class="status-indicator doing"></div>
+                        <span class="status-title">Doing</span>
+                        <span class="status-count">0</span>
+                    </div>
+                    <div class="column-tasks" id="doingBoard"></div>
+                </div>
+
+                <div class="board-column" data-status="done">
+                    <div class="column-header">
+                        <div class="status-indicator done"></div>
+                        <span class="status-title">Done</span>
+                        <span class="status-count">0</span>
+                    </div>
+                    <div class="column-tasks" id="doneBoard"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add/Edit Task Modal -->
+    <div class="modal" id="taskModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add task</h2>
+                <button class="close-btn" id="closeModalBtn">&times;</button>
+            </div>
+            <form id="taskForm">
+                <div class="form-group">
+                    <label for="taskName">Name</label>
+                    <input type="text" id="taskName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="taskDescription">Description</label>
+                    <textarea id="taskDescription" rows="4"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Due date</label>
+                    <div class="date-inputs">
+                        <div class="date-field">
+                            <label for="taskDay">Day</label>
+                            <input type="number" id="taskDay" min="1" max="31" placeholder="DD">
+                        </div>
+                        <div class="date-field">
+                            <label for="taskMonth">Month</label>
+                            <input type="number" id="taskMonth" min="1" max="12" placeholder="MM">
+                        </div>
+                        <div class="date-field">
+                            <label for="taskYear">Year</label>
+                            <input type="number" id="taskYear" min="2024" placeholder="YYYY">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="taskStatus">Status</label>
+                    <div class="select-wrapper">
+                        <select id="taskStatus">
+                            <option value="todo">To do</option>
+                            <option value="doing">Doing</option>
+                            <option value="done">Done</option>
+                        </select>
+                    </div>
+                    <div class="status-options" id="statusOptions">
+                        <div class="status-option" data-value="todo">
+                            <div class="status-indicator todo"></div>
+                            <span>To do</span>
+                        </div>
+                        <div class="status-option" data-value="doing">
+                            <div class="status-indicator doing"></div>
+                            <span>Doing</span>
+                        </div>
+                        <div class="status-option" data-value="done">
+                            <div class="status-indicator done"></div>
+                            <span>Done</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-submit" id="submitBtn">Add task</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

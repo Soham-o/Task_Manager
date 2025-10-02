@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Tasks - Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Protest+Guerrilla&display=swap" rel="stylesheet">
+    <style>
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        } 
+        
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; 
+            background-color: #fffaf0; 
+            color: #333; 
+            line-height: 1.5; 
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        } 
+
+        .auth-container {
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .app-title { 
+            font-family: "Protest Guerrilla", sans-serif;
+            font-weight: 400;
+            font-style: normal; 
+            color: #222121; 
+            text-transform: uppercase;
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .auth-box {
+            background: #fff;
+            border: 5px solid #000;
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        .auth-tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 2rem;
+            border: 2px solid #000;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            background: white;
+            color: #000;
+            font-size: 1rem;
+            font-weight: 550;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-right: 2px solid #000;
+        }
+
+        .tab-btn:last-child {
+            border-right: none;
+        }
+
+        .tab-btn.active {
+            background-color: #94e4ff;
+            color: #000;
+        }
+
+        .tab-btn:not(.active):hover {
+            background-color: #f0f0f0;
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .form-group { 
+            margin-bottom: 1.5rem; 
+        }
+
+        .form-group label { 
+            display: block; 
+            margin-bottom: 0.5rem; 
+            font-weight: 500; 
+            color: #333; 
+        }
+
+        .form-group input { 
+            width: 100%; 
+            padding: 0.75rem; 
+            border: 2px solid #333; 
+            border-radius: 6px; 
+            font-size: 0.875rem; 
+            background: white; 
+            transition: all 0.2s ease; 
+        }
+
+        .form-group input:focus { 
+            outline: none; 
+            border-color: #12a0f8;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); 
+        }
+
+        .btn-submit {
+            background-color: #b1f9b1;
+            color: #000000;
+            width: 100%;
+            padding: 0.75rem;
+            font-size: 1rem;
+            margin-top: 1rem;
+            border: 2px solid #000000;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 550;
+            transition: all 0.2s ease;
+        }
+
+        .btn-submit:hover {
+            background-color: #77dd77;
+            box-shadow: 5px 5px 0px #000;
+        }
+
+        .error-message {
+            background-color: #fca5a5;
+            color: #000;
+            padding: 0.75rem;
+            border-radius: 6px;
+            border: 2px solid #000;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .success-message {
+            background-color: #90ee90;
+            color: #000;
+            padding: 0.75rem;
+            border-radius: 6px;
+            border: 2px solid #000;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        .password-requirements {
+            font-size: 0.75rem;
+            color: #6b7280;
+            margin-top: 0.25rem;
+        }
+
+        @media (max-width: 768px) {
+            .app-title {
+                font-size: 2rem;
+            }
+            
+            .auth-box {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <h1 class="app-title">My Tasks</h1>
+        
+        <div class="auth-box">
+            <div class="auth-tabs">
+                <button class="tab-btn active" id="loginTab">Login</button>
+                <button class="tab-btn" id="signupTab">Sign Up</button>
+            </div>
+
+            <div class="error-message" id="errorMessage"></div>
+            <div class="success-message" id="successMessage"></div>
+
+            <!-- Login Form -->
+            <form class="auth-form active" id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" required placeholder="Enter your email">
+                </div>
+
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required placeholder="Enter your password">
+                </div>
+
+                <button type="submit" class="btn-submit">Login</button>
+
+                <div class="form-footer">
+                    Don't have an account? Click Sign Up above
+                </div>
+            </form>
+
+            <!-- Signup Form -->
+            <form class="auth-form" id="signupForm">
+                <div class="form-group">
+                    <label for="signupName">Full Name</label>
+                    <input type="text" id="signupName" required placeholder="Enter your full name">
+                </div>
+
+                <div class="form-group">
+                    <label for="signupEmail">Email</label>
+                    <input type="email" id="signupEmail" required placeholder="Enter your email">
+                </div>
+
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" required placeholder="Create a password">
+                    <div class="password-requirements">
+                        Password must be at least 6 characters
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="signupConfirmPassword">Confirm Password</label>
+                    <input type="password" id="signupConfirmPassword" required placeholder="Confirm your password">
+                </div>
+
+                <button type="submit" class="btn-submit">Sign Up</button>
+
+                <div class="form-footer">
+                    Already have an account? Click Login above
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        class AuthManager {
+            constructor() {
+                this.init();
+            }
+
+            init() {
+                // Check if user is already logged in
+                if (this.isLoggedIn()) {
+                    window.location.href = 'index.html';
+                    return;
+                }
+
+                this.bindEvents();
+            }
+
+            bindEvents() {
+                // Tab switching
+                document.getElementById('loginTab').addEventListener('click', () => this.switchTab('login'));
+                document.getElementById('signupTab').addEventListener('click', () => this.switchTab('signup'));
+
+                // Form submissions
+                document.getElementById('loginForm').addEventListener('submit', (e) => this.handleLogin(e));
+                document.getElementById('signupForm').addEventListener('submit', (e) => this.handleSignup(e));
+            }
+
+            switchTab(tab) {
+                const loginTab = document.getElementById('loginTab');
+                const signupTab = document.getElementById('signupTab');
+                const loginForm = document.getElementById('loginForm');
+                const signupForm = document.getElementById('signupForm');
+
+                this.hideMessages();
+
+                if (tab === 'login') {
+                    loginTab.classList.add('active');
+                    signupTab.classList.remove('active');
+                    loginForm.classList.add('active');
+                    signupForm.classList.remove('active');
+                } else {
+                    signupTab.classList.add('active');
+                    loginTab.classList.remove('active');
+                    signupForm.classList.add('active');
+                    loginForm.classList.remove('active');
+                }
+            }
+
+            handleLogin(e) {
+                e.preventDefault();
+                
+                const email = document.getElementById('loginEmail').value.trim();
+                const password = document.getElementById('loginPassword').value;
+
+                // Get stored user
+                const users = this.getUsers();
+                const user = users.find(u => u.email === email);
+
+                if (!user) {
+                    this.showError('Email not found. Please sign up first.');
+                    return;
+                }
+
+                if (user.password !== password) {
+                    this.showError('Incorrect password. Please try again.');
+                    return;
+                }
+
+                // Set logged in user
+                localStorage.setItem('currentUser', JSON.stringify({
+                    name: user.name,
+                    email: user.email
+                }));
+
+                this.showSuccess('Login successful! Redirecting...');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1000);
+            }
+
+            handleSignup(e) {
+                e.preventDefault();
+
+                const name = document.getElementById('signupName').value.trim();
+                const email = document.getElementById('signupEmail').value.trim();
+                const password = document.getElementById('signupPassword').value;
+                const confirmPassword = document.getElementById('signupConfirmPassword').value;
+
+                // Validation
+                if (name.length < 2) {
+                    this.showError('Name must be at least 2 characters long.');
+                    return;
+                }
+
+                if (!this.isValidEmail(email)) {
+                    this.showError('Please enter a valid email address.');
+                    return;
+                }
+
+                if (password.length < 6) {
+                    this.showError('Password must be at least 6 characters long.');
+                    return;
+                }
+
+                if (password !== confirmPassword) {
+                    this.showError('Passwords do not match.');
+                    return;
+                }
+
+                // Check if user already exists
+                const users = this.getUsers();
+                if (users.find(u => u.email === email)) {
+                    this.showError('An account with this email already exists.');
+                    return;
+                }
+
+                // Create new user
+                const newUser = {
+                    name,
+                    email,
+                    password,
+                    createdAt: new Date().toISOString()
+                };
+
+                users.push(newUser);
+                localStorage.setItem('users', JSON.stringify(users));
+
+                this.showSuccess('Account created successfully! Please login.');
+                
+                // Switch to login tab after 1.5 seconds
+                setTimeout(() => {
+                    this.switchTab('login');
+                    document.getElementById('loginEmail').value = email;
+                    document.getElementById('signupForm').reset();
+                }, 1500);
+            }
+
+            getUsers() {
+                try {
+                    const users = localStorage.getItem('users');
+                    return users ? JSON.parse(users) : [];
+                } catch {
+                    return [];
+                }
+            }
+
+            isLoggedIn() {
+                return localStorage.getItem('currentUser') !== null;
+            }
+
+            isValidEmail(email) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(email);
+            }
+
+            showError(message) {
+                const errorDiv = document.getElementById('errorMessage');
+                const successDiv = document.getElementById('successMessage');
+                
+                successDiv.classList.remove('show');
+                errorDiv.textContent = message;
+                errorDiv.classList.add('show');
+
+                setTimeout(() => {
+                    errorDiv.classList.remove('show');
+                }, 5000);
+            }
+
+            showSuccess(message) {
+                const errorDiv = document.getElementById('errorMessage');
+                const successDiv = document.getElementById('successMessage');
+                
+                errorDiv.classList.remove('show');
+                successDiv.textContent = message;
+                successDiv.classList.add('show');
+
+                setTimeout(() => {
+                    successDiv.classList.remove('show');
+                }, 5000);
+            }
+
+            hideMessages() {
+                document.getElementById('errorMessage').classList.remove('show');
+                document.getElementById('successMessage').classList.remove('show');
+            }
+        }
+
+        // Initialize auth manager
+        const authManager = new AuthManager();
+    </script>
+</body>
+</html>
