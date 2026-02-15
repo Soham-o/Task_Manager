@@ -27,17 +27,6 @@
 
 <br/>
 
----
-
-### 🖥️ Interface Preview
-
-| **Kanban Board View** | **List View** |
-|:---:|:---:|
-| <img src="https://via.placeholder.com/400x250/fffaf0/333?text=Drag+%26+Drop+Board" alt="Board View"> | <img src="https://via.placeholder.com/400x250/fffaf0/333?text=Task+List+Interface" alt="List View"> |
-
-> *Featuring a clean "Floral White" (`#fffaf0`) aesthetic with "Protest Guerrilla" typography.*
-
----
 
 ### ✨ Features
 
@@ -68,3 +57,37 @@ The application includes a custom parser to handle data portability.
 escapeCSV(text) {
     return text.replace(/"/g, '""'); // Handles escaped quotes automatically
 }
+```
+Quick Start
+Since this is a client-side only application, deployment is instant.
+
+Clone the Repo
+
+Bash
+git clone [https://github.com/yourusername/my-tasks.git]([https://github.com/yourusername/my-tasks.git](https://github.com/Soham-o/Task_Manager.git))
+Launch
+Simply double-click index.html to open it in your browser.
+
+Note: The app will automatically redirect you to auth_page.html if you aren't logged in.
+
+Create an Account
+
+Use any email/password (Data is stored locally on your machine).
+
+Start adding tasks!
+
+📂 Project Structure
+
+Plaintext
+.
+├── auth_page.html      # Login & Signup interface
+
+├── index.html          # Main Task Dashboard (List & Board views)
+
+├── script.js           # Core logic (Auth guard, CRUD operations, CSV handling)
+
+└── styles.css          # Custom styling (Protest Guerrilla font, Responsive grid)
+
+<div align="center">
+<sub>Built with Vanilla JS • No Frameworks Required</sub>
+</div>
